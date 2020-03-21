@@ -10,7 +10,9 @@ $ npm install
 ```
 
 ## Run
+```bash
 $ # Edit connection.json if necessary
 $ node server.js > server.log &
 $ npm run generate
 $ npm run start
+```
