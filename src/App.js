@@ -1,41 +1,29 @@
 import React from 'react';
-import { Suspense } from 'react';
-//import { graphql } from '@gqless/react'
-import { graphql, query } from './generated/graphql';
+import { useQuery } from './generated/graphql';
 
-const Author = graphql(() => {
-  const user = query.getFirstUsers;
-  return (
-    <div>
-      <h1>{ user.id }: { user.username }</h1>
-      <PagePosts user={user} />
-    </div>
-  )
-})
-
-const PagePosts = graphql(({ user }) => {
-  const args = {
-    where: {
-      sql: 'publish=? and users_id=?',
-      val: [ String(1), String(user.id) ]
+function Example() {
+  const { getPageUsers, $state } = useQuery({
+    prepare({ prepass, query }) {
+      prepass(query.getPageUsers, 'items.id', 'items.username', 'total');
     }
-  };
-  const items = user.posts(args).items;
-  return (
-    <div>
-      { items.map(post => 
-        <h2>{ post.id }: { post.title }</h2>
-      ) }
-    </div>
-  )
-})
+  });
 
-function App() {
+  if ($state.isLoading) return <p>Loading...</p>;
+
   return (
-    <Suspense fallback={<span>loading...</span>}>
-      <Author />
-    </Suspense>
+    <>
+      {getPageUsers.items.map(({ id, username }) => {
+        return (
+          <p key={id}>
+            Name: {username}
+            <br />
+            Dogs:
+            <br />
+          </p>
+        );
+      })}
+    </>
   );
 }
 
-export default App;
+export default Example;

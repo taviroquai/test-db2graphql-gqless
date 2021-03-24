@@ -19,7 +19,6 @@ export interface Scalars {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** The `Upload` scalar type represents a file upload. */
   Upload: any;
 }
 
@@ -54,7 +53,13 @@ export interface InputUsers {
   lastname?: Maybe<Scalars["String"]>;
 }
 
-export const scalarsEnumsHash: ScalarsEnumsHash = {};
+export const scalarsEnumsHash: ScalarsEnumsHash = {
+  CacheControlScope: true,
+  Int: true,
+  String: true,
+  Boolean: true,
+  Upload: true,
+};
 export const generatedSchema = {
   query: {
     __typename: { __type: "String!" },
@@ -136,67 +141,142 @@ export const generatedSchema = {
     },
   },
   subscription: {},
+  Categories: {
+    __typename: { __type: "String!" },
+    id: { __type: "Int" },
+    title: { __type: "String" },
+    posts: {
+      __type: "PagePosts",
+      __args: {
+        filter: "String",
+        pagination: "String",
+        where: "Condition",
+        _debug: "Boolean",
+        _cache: "Boolean",
+      },
+    },
+  },
+  Condition: { sql: { __type: "String!" }, val: { __type: "[String!]!" } },
+  InputCategories: { id: { __type: "Int" }, title: { __type: "String" } },
+  InputPosts: {
+    id: { __type: "Int" },
+    users_id: { __type: "Int" },
+    title: { __type: "String" },
+    categories_id: { __type: "Int" },
+    publish: { __type: "Boolean" },
+  },
+  InputUsers: {
+    id: { __type: "Int" },
+    username: { __type: "String" },
+    password: { __type: "String" },
+    firstname: { __type: "String" },
+    lastname: { __type: "String" },
+  },
+  PageCategories: {
+    __typename: { __type: "String!" },
+    total: { __type: "Int" },
+    items: { __type: "[Categories]" },
+  },
+  PagePosts: {
+    __typename: { __type: "String!" },
+    total: { __type: "Int" },
+    items: { __type: "[Posts]" },
+  },
+  PageUsers: {
+    __typename: { __type: "String!" },
+    total: { __type: "Int" },
+    items: { __type: "[Users]" },
+  },
+  Posts: {
+    __typename: { __type: "String!" },
+    id: { __type: "Int" },
+    users_id: { __type: "Int" },
+    title: { __type: "String" },
+    categories_id: { __type: "Int" },
+    publish: { __type: "Boolean" },
+    users_id_users: { __type: "Users" },
+    categories_id_categories: { __type: "Categories" },
+  },
+  Users: {
+    __typename: { __type: "String!" },
+    id: { __type: "Int" },
+    username: { __type: "String" },
+    password: { __type: "String" },
+    firstname: { __type: "String" },
+    lastname: { __type: "String" },
+    posts: {
+      __type: "PagePosts",
+      __args: {
+        filter: "String",
+        pagination: "String",
+        where: "Condition",
+        _debug: "Boolean",
+        _cache: "Boolean",
+      },
+    },
+    fullname: { __type: "String", __args: { foo: "String" } },
+  },
 } as const;
 
 export interface Query {
   __typename: "Query" | undefined;
-  getAPIName?: Maybe<String>;
+  getAPIName?: ScalarsEnums["String"];
   getPageCategories: (args?: {
-    filter?: Maybe<String>;
-    pagination?: Maybe<String>;
+    filter?: ScalarsEnums["String"];
+    pagination?: ScalarsEnums["String"];
     where?: Maybe<Condition>;
-    _debug?: Maybe<Boolean>;
-    _cache?: Maybe<Boolean>;
+    _debug?: ScalarsEnums["Boolean"];
+    _cache?: ScalarsEnums["Boolean"];
   }) => Maybe<PageCategories>;
   getFirstCategories: (args?: {
-    filter?: Maybe<String>;
-    pagination?: Maybe<String>;
+    filter?: ScalarsEnums["String"];
+    pagination?: ScalarsEnums["String"];
     where?: Maybe<Condition>;
-    _debug?: Maybe<Boolean>;
-    _cache?: Maybe<Boolean>;
+    _debug?: ScalarsEnums["Boolean"];
+    _cache?: ScalarsEnums["Boolean"];
   }) => Maybe<Categories>;
   getPagePosts: (args?: {
-    filter?: Maybe<String>;
-    pagination?: Maybe<String>;
+    filter?: ScalarsEnums["String"];
+    pagination?: ScalarsEnums["String"];
     where?: Maybe<Condition>;
-    _debug?: Maybe<Boolean>;
-    _cache?: Maybe<Boolean>;
+    _debug?: ScalarsEnums["Boolean"];
+    _cache?: ScalarsEnums["Boolean"];
   }) => Maybe<PagePosts>;
   getFirstPosts: (args?: {
-    filter?: Maybe<String>;
-    pagination?: Maybe<String>;
+    filter?: ScalarsEnums["String"];
+    pagination?: ScalarsEnums["String"];
     where?: Maybe<Condition>;
-    _debug?: Maybe<Boolean>;
-    _cache?: Maybe<Boolean>;
+    _debug?: ScalarsEnums["Boolean"];
+    _cache?: ScalarsEnums["Boolean"];
   }) => Maybe<Posts>;
   getPageUsers: (args?: {
-    filter?: Maybe<String>;
-    pagination?: Maybe<String>;
+    filter?: ScalarsEnums["String"];
+    pagination?: ScalarsEnums["String"];
     where?: Maybe<Condition>;
-    _debug?: Maybe<Boolean>;
-    _cache?: Maybe<Boolean>;
+    _debug?: ScalarsEnums["Boolean"];
+    _cache?: ScalarsEnums["Boolean"];
   }) => Maybe<PageUsers>;
   getFirstUsers: (args?: {
-    filter?: Maybe<String>;
-    pagination?: Maybe<String>;
+    filter?: ScalarsEnums["String"];
+    pagination?: ScalarsEnums["String"];
     where?: Maybe<Condition>;
-    _debug?: Maybe<Boolean>;
-    _cache?: Maybe<Boolean>;
+    _debug?: ScalarsEnums["Boolean"];
+    _cache?: ScalarsEnums["Boolean"];
   }) => Maybe<Users>;
 }
 
 export interface Mutation {
   __typename: "Mutation" | undefined;
   putItemCategories: (args: {
-    _debug?: Maybe<Boolean>;
+    _debug?: ScalarsEnums["Boolean"];
     input: InputCategories;
   }) => Maybe<Categories>;
   putItemPosts: (args: {
-    _debug?: Maybe<Boolean>;
+    _debug?: ScalarsEnums["Boolean"];
     input: InputPosts;
   }) => Maybe<Posts>;
   putItemUsers: (args: {
-    _debug?: Maybe<Boolean>;
+    _debug?: ScalarsEnums["Boolean"];
     input: InputUsers;
   }) => Maybe<Users>;
 }
@@ -205,12 +285,86 @@ export interface Subscription {
   __typename: "Subscription" | undefined;
 }
 
+export interface Categories {
+  __typename: "Categories" | undefined;
+  id?: ScalarsEnums["Int"];
+  title?: ScalarsEnums["String"];
+  posts: (args?: {
+    filter?: ScalarsEnums["String"];
+    pagination?: ScalarsEnums["String"];
+    where?: Maybe<Condition>;
+    _debug?: ScalarsEnums["Boolean"];
+    _cache?: ScalarsEnums["Boolean"];
+  }) => Maybe<PagePosts>;
+}
+
+export interface PageCategories {
+  __typename: "PageCategories" | undefined;
+  total?: ScalarsEnums["Int"];
+  items?: Maybe<Array<Maybe<Categories>>>;
+}
+
+export interface PagePosts {
+  __typename: "PagePosts" | undefined;
+  total?: ScalarsEnums["Int"];
+  items?: Maybe<Array<Maybe<Posts>>>;
+}
+
+export interface PageUsers {
+  __typename: "PageUsers" | undefined;
+  total?: ScalarsEnums["Int"];
+  items?: Maybe<Array<Maybe<Users>>>;
+}
+
+export interface Posts {
+  __typename: "Posts" | undefined;
+  id?: ScalarsEnums["Int"];
+  users_id?: ScalarsEnums["Int"];
+  title?: ScalarsEnums["String"];
+  categories_id?: ScalarsEnums["Int"];
+  publish?: ScalarsEnums["Boolean"];
+  users_id_users?: Maybe<Users>;
+  categories_id_categories?: Maybe<Categories>;
+}
+
+export interface Users {
+  __typename: "Users" | undefined;
+  id?: ScalarsEnums["Int"];
+  username?: ScalarsEnums["String"];
+  password?: ScalarsEnums["String"];
+  firstname?: ScalarsEnums["String"];
+  lastname?: ScalarsEnums["String"];
+  posts: (args?: {
+    filter?: ScalarsEnums["String"];
+    pagination?: ScalarsEnums["String"];
+    where?: Maybe<Condition>;
+    _debug?: ScalarsEnums["Boolean"];
+    _cache?: ScalarsEnums["Boolean"];
+  }) => Maybe<PagePosts>;
+  fullname: (args?: { foo?: ScalarsEnums["String"] }) => ScalarsEnums["String"];
+}
+
 export interface SchemaObjectTypes {
   Query: Query;
   Mutation: Mutation;
   Subscription: Subscription;
+  Categories: Categories;
+  PageCategories: PageCategories;
+  PagePosts: PagePosts;
+  PageUsers: PageUsers;
+  Posts: Posts;
+  Users: Users;
 }
-export type SchemaObjectTypesNames = "Query" | "Mutation" | "Subscription";
+export type SchemaObjectTypesNames =
+  | "Query"
+  | "Mutation"
+  | "Subscription"
+  | "Categories"
+  | "PageCategories"
+  | "PagePosts"
+  | "PageUsers"
+  | "Posts"
+  | "Users";
 
 export interface GeneratedSchema {
   query: Query;
@@ -222,4 +376,6 @@ export type MakeNullable<T> = {
   [K in keyof T]: T[K] | undefined;
 };
 
-export interface ScalarsEnums extends MakeNullable<Scalars> {}
+export interface ScalarsEnums extends MakeNullable<Scalars> {
+  CacheControlScope: CacheControlScope | undefined;
+}

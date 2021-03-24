@@ -1,0 +1,148 @@
+directive @cacheControl(
+  maxAge: Int
+  scope: CacheControlScope
+) on FIELD_DEFINITION | OBJECT | INTERFACE
+# Exposes a URL that specifies the behaviour of this scalar.
+directive @specifiedBy(
+  # The URL that specifies the behaviour of this scalar.
+  url: String!
+) on SCALAR
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
+
+type Categories {
+  id: Int
+  title: String
+  posts(
+    filter: String
+    pagination: String
+    where: Condition
+    _debug: Boolean
+    _cache: Boolean
+  ): PagePosts
+}
+
+input Condition {
+  sql: String!
+  val: [String!]!
+}
+
+input InputCategories {
+  id: Int
+  title: String
+}
+
+input InputPosts {
+  id: Int
+  users_id: Int
+  title: String
+  categories_id: Int
+  publish: Boolean
+}
+
+input InputUsers {
+  id: Int
+  username: String
+  password: String
+  firstname: String
+  lastname: String
+}
+
+type Mutation {
+  putItemCategories(_debug: Boolean, input: InputCategories!): Categories
+  putItemPosts(_debug: Boolean, input: InputPosts!): Posts
+  putItemUsers(_debug: Boolean, input: InputUsers!): Users
+}
+
+type PageCategories {
+  total: Int
+  items: [Categories]
+}
+
+type PagePosts {
+  total: Int
+  items: [Posts]
+}
+
+type PageUsers {
+  total: Int
+  items: [Users]
+}
+
+type Posts {
+  id: Int
+  users_id: Int
+  title: String
+  categories_id: Int
+  publish: Boolean
+  users_id_users: Users
+  categories_id_categories: Categories
+}
+
+type Query {
+  getAPIName: String
+  getPageCategories(
+    filter: String
+    pagination: String
+    where: Condition
+    _debug: Boolean
+    _cache: Boolean
+  ): PageCategories
+  getFirstCategories(
+    filter: String
+    pagination: String
+    where: Condition
+    _debug: Boolean
+    _cache: Boolean
+  ): Categories
+  getPagePosts(
+    filter: String
+    pagination: String
+    where: Condition
+    _debug: Boolean
+    _cache: Boolean
+  ): PagePosts
+  getFirstPosts(
+    filter: String
+    pagination: String
+    where: Condition
+    _debug: Boolean
+    _cache: Boolean
+  ): Posts
+  getPageUsers(
+    filter: String
+    pagination: String
+    where: Condition
+    _debug: Boolean
+    _cache: Boolean
+  ): PageUsers
+  getFirstUsers(
+    filter: String
+    pagination: String
+    where: Condition
+    _debug: Boolean
+    _cache: Boolean
+  ): Users
+}
+
+# The `Upload` scalar type represents a file upload.
+scalar Upload
+
+type Users {
+  id: Int
+  username: String
+  password: String
+  firstname: String
+  lastname: String
+  posts(
+    filter: String
+    pagination: String
+    where: Condition
+    _debug: Boolean
+    _cache: Boolean
+  ): PagePosts
+  fullname(foo: String): String
+}
+
