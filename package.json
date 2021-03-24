@@ -3,15 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@gqless/cli": "^2.0.2",
     "@gqless/logger": "^2.0.1",
-    "@gqless/react": "0.0.1-alpha.27",
+    "@gqless/react": "^2.0.3",
     "@gqless/subscriptions": "^1.0.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@types/jest": "^26.0.21",
+    "@types/node": "^14.14.35",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
     "apollo-server": "^2.11.0",
     "db2graphql": "^0.5.5",
-    "gqless": "^2.0.1",
+    "gqless": "^2.0.2",
     "knex": "^0.20.12",
     "pg": "^7.18.2",
     "react": "^16.13.1",
@@ -27,7 +32,11 @@
   },
   "gqless": {
     "url": "http://localhost:4000/graphql",
-    "outputDir": "src/graphql"
+    "outputDir": "src/graphql",
+    "react": true,
+    "introspection": {
+      "endpoint": "http://localhost:4000/graphql"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,7 +54,6 @@
     ]
   },
   "devDependencies": {
-    "@gqless/cli": "0.0.1-alpha.30",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.9"
   }
 }

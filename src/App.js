@@ -1,7 +1,7 @@
 import React from 'react';
 import { Suspense } from 'react';
-import { graphql } from '@gqless/react'
-import { query } from './graphql';
+//import { graphql } from '@gqless/react'
+import { graphql, query } from './generated/graphql';
 
 const Author = graphql(() => {
   const user = query.getFirstUsers;
